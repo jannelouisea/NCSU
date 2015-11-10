@@ -45,7 +45,27 @@ int compareFunc( void const *a, void const *b )
 
 int bestCode( WordList *w, char const *str )
 {
-    Word *index;
+    Word copy;
+    int i = 2;
+    copy[0] = *str;
+    copy[1] = '\0';
+    
+    Word *temp;
+    Word *index = bsearch( copy, w->words, w->len, sizeof( w->words[0] ), compareFunc );
+    
+    while ( (index != NULL) && (i <= WORD_MAX) && (*(str + i + 1) != '\0') ) {
+        temp = index;
+        for (int j = 0; j <= i; j++) {
+            copy[j] = *(str + j);
+        }
+        copy[ i + 1 ] = '\0';
+        i++;
+        printf("copy: %s\n", copy );
+        index = bsearch( copy, w->words, w->len, sizeof( w->words[0] ), compareFunc );
+        printf("Index: %ld\n", temp - w->words);
+    }
+    
+    return temp - w->words;
 }
 
 /**

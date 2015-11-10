@@ -89,7 +89,7 @@ void writeCode( int code, PendingBits *p, FILE *fp )
     } else {
         c = code << p->bitCount | p->bits;
         p->bits = code >> ( BITS_PER_BYTE - p->bitCount );
-        p->bitCOunt += 1;
+        p->bitCount += 1;
         fprintf( fp, "%c", c );
     }
 }
@@ -101,29 +101,22 @@ int compareFunc( void const *a, void const *b )
 
 int bestCode( WordList *w, char const *str )
 {
-    Word copy;
-    int i = 2;
-    copy[0] = *str;
-    copy[1] = '\0';
+    char prefix[ strlen(str) ];
     
-    Word *temp;
-    Word *index = bsearch( copy, w->words, w->len, sizeof( w->words[0] ), compareFunc );
-    
-    if ( *(str + 1) == '\0' ) {
-        temp = bsearch( copy, w->words, w->len, sizeof( w->words[0] ), compareFunc );
-    } else {
-        while ( (index != NULL) && (i <= WORD_MAX) ) {
-            temp = index;
-            for (int j = 0; j <= i; j++) {
-                copy[j] = *(str + j);
-            }
-            copy[ i + 1 ] = '\0';
-            i++;
-            index = bsearch( copy, w->words, w->len, sizeof( w->words[0] ), compareFunc );
+    Word *ptr;
+    // Starts with the whole String and works its way done
+    for ( int i = 0; i < strlen( str ); i++ ) {
+        strncpy( prefix, str, strlen( str ) - i );
+        prefix[ strlen( str ) - i ] = '\0';
+        ptr = bsearch( prefix, w->words, w->len, sizeof( w->words[ 0 ] ), compareFunc );
+        if ( ptr != NULL ) {
+            break;
         }
     }
     
-    return temp - w->words;
+    // Give the index of the prefix in the WordList
+    return ptr - w->words;
+    
 }
 
 /**
@@ -273,8 +266,8 @@ int main(int argc, char *argv[]) {
         printf( "%s", buffer );
         printf("--------------------\n");
         
-        // FILE *output = fopen( argv[2], "w" );
-        FILE *output = stdout;
+        FILE *output = fopen( argv[2], "w" );
+        // FILE *output = stdout;
         if ( input == NULL ) {
             fprintf( stderr, "Can't open file: %s\n", argv[2] );
             freeWordList( wordList );
@@ -289,8 +282,9 @@ int main(int argc, char *argv[]) {
             writeCode( code, &p, output );
             pos += strlen( wordList->words[ code ] );
         }
-        
-        flushbits( p, output );
+        if ( p.bitCount != 0 ) {
+            flushbits( &p, output );
+        }
         
         fclose( input );
         freeWordList( wordList );

@@ -1,0 +1,10 @@
+CC=gcc
+CFLAGS=-Wall -std=c99
+
+test: wordlist.o bits.o
+wordlist.o: wordlist.h
+test.o: wordlist.h bits.h
+bits.o: bits.h
+clean:
+	rm -rf *.o
+	rm -rf test

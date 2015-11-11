@@ -1,9 +1,9 @@
-/** 
-    @file bits.h
-    @author
+/**
+  @file bits.h
+  @author Janne Louise Ave (jfave)
 
-    Header file for the bits.c component, with functions supporting
-    reading and writing arbitrary bit sequences to files.
+  Header file for the bits.c component, with functions supporting
+  reading and writing arbitrary bit sequences to files.
 */
 
 #ifndef _BITS_H_
@@ -32,7 +32,7 @@ typedef struct {
   int bitCount;
 } PendingBits;
 
-/** Write the 9 low-order bits from code to the given file.  
+/** Write the 9 low-order bits from code to the given file.
     @param code bits to write out, a value betteen 0 and 2^9 - 1.
     @param pending pointer to storage for unwritten bits left over
     from the previous call to writeCode().  After this call, any bits

@@ -1,2 +1,2 @@
-Canput open file: input_10.txt
+Can't open file: input_10.txt
 usage: pack <input.txt> <compressed.raw> [word_file.txt]

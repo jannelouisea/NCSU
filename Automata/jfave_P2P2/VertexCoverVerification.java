@@ -65,6 +65,10 @@ public class VertexCoverVerification {
                 vSet.add(line.nextInt());
                 numOfVertices++;
             }
+            System.out.print("Candidate Set: ");
+            for (int v: vSet) {
+                System.out.print(v + " ");
+            }
             if ( numOfVertices != k ) {
                 System.out.println( "no" );
             } else {

@@ -26,6 +26,16 @@ public class AdjacencyMatrix {
                     output += i + " " + j + "\n";
             }
         }
+        return output;
+    }
+    
+    public void printMatrix() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.print( adjMtrx[i][j] + " " );
+            }
+            System.out.println();
+        }
     }
     
 }

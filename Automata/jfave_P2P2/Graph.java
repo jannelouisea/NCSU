@@ -1,22 +1,28 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Graph {
 	
-	public ArrayList<Integer> vertices;
+    public TreeMap<Integer, Integer> vertices;
+	// public ArrayList<Integer> vertices;
 	public ArrayList<Edge> edges;
 	
 	public Graph() {
-		this.vertices = new ArrayList<Integer>();
+        this.vertices = new TreeMap<Integer, Integer>();
+		// this.vertices = new ArrayList<Integer>();
 		this.edges = new ArrayList<Edge>();
 	}
 	
-	public void addVertex(Integer v) {
-		this.vertices.add(v);
+	public void addVertex(int key, int value) {
+        vertices.put(key, value);
+		// this.vertices.add(v);
 	}
+    
+    public Integer getValue(int key) {
+        return vertices.get(key);
+    }
 	
 	public boolean contains(Integer v) {
-		if (this.vertices.contains(v)) {
+		if (this.vertices.containsValue(v)) {
 			return true;
 		} else {
 			return false;
@@ -39,12 +45,21 @@ public class Graph {
 		}
 	}
     	
-	public String printVertices() {
+	public void printVertices() {
+        Set set = this.vertices.entrySet();
+        Iterator i = set.iterator();
+        while(i.hasNext()) {
+            Map.Entry current = (Map.Entry)i.next();
+            System.out.print(current.getKey() + ": ");
+            System.out.println(current.getValue());
+        }
+        /**
 		String list = "";
 		for (int i = 0; i < vertices.size(); i++) {
-			list += vertices.get(i).intValue() + " ";
+			list += this.vertices.getValue(i) + " ";
 		}
 		return list;
+         */
 	}
 	
 	public String printEdges() {

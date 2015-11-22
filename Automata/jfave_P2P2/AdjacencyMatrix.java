@@ -22,20 +22,31 @@ public class AdjacencyMatrix {
         adjMtrx[end][start] = 0; // upadtes compliment graph
     }
     
-    public String getCompliment() {
+    public String getCompliment(Graph g) {
         String output = "";
         // only traverse the lower half of the triangle
         for (int i = 1; i < size; i++) {
             for (int j = 0; j < i; j++) {
                 if (adjMtrx[i][j] == 1)
-                    output += i + " " + j + "\n";
+                    output += g.getValue(i) + " " + g.getValue(j) + "\n";
             }
         }
         return output;
     }
     
     public void printMatrix() {
+        System.out.print("  ");
         for (int i = 0; i < size; i++) {
+            System.out.print( i + " ");
+        }
+        System.out.println();
+        System.out.print("  ");
+        for (int i = 0; i < size; i++) {
+            System.out.print( "- ");
+        }
+        System.out.println();
+        for (int i = 0; i < size; i++) {
+            System.out.print(i + "|");
             for (int j = 0; j < size; j++) {
                 System.out.print( adjMtrx[i][j] + " " );
             }
